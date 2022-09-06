@@ -3,13 +3,18 @@ import exitIcon from "../img/exit.svg"
 import menosIcon from "../img/menos.svg"
 import maisIcon from "../img/mais.svg"
 
+import { useNavigate } from 'react-router-dom'
+
 export default function Home (){
+
+    const navigate = useNavigate()
+
     return(
         <Container>
 
             <ContainerTittle>
                 <p>Olá, Fulano</p>
-                <img src={exitIcon}></img>
+                <img src={exitIcon} onClick={() => navigate("/login")}></img>
             </ContainerTittle>
 
             <ContainerRegistro>
@@ -19,11 +24,13 @@ export default function Home (){
 
             <ContainerButton>
 
-                <Button>              
+                <Button onClick={ () => navigate("/entrada")}> 
+                    
                     <img src={maisIcon}></img>
                     <p>Nova entrada</p>
+                                
                 </Button>
-                <Button>
+                <Button onClick={ () => navigate("/saida")}>
                     <img src={menosIcon}></img>
                     <p>Nova saída</p>                  
                 </Button>

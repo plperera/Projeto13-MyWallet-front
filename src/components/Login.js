@@ -1,13 +1,18 @@
 import styled from "styled-components"
 import logo from "../img/logo.svg"
+import { useNavigate } from 'react-router-dom'
+
 export default function Login (){
+
+    const navigate = useNavigate()
+
     return(
         <Container>
             <Logotipo src={logo}></Logotipo>
             <Input></Input>
             <Input></Input>
-            <Button>Entrar</Button>
-            <p>Primeira vez? Cadastre-se!</p>
+            <Button onClick={() => navigate("/")}>Entrar</Button>
+            <p onClick={() => navigate("/cadastro")}>Primeira vez? Cadastre-se!</p>
 
         </Container>
     )
@@ -22,6 +27,7 @@ export const Container = styled.div`
     height:100vh;
 
     p {
+        text-align:center;
         width: 227px;
         height: 18px;
 

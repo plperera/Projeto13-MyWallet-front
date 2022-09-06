@@ -1,7 +1,12 @@
 import styled from "styled-components"
 import logo from "../img/logo.svg"
 import {Container, Input, Button, Logotipo} from "./Login"
+import { useNavigate } from 'react-router-dom'
+
 export default function Cadastro (){
+
+    const navigate = useNavigate()
+
     return(
         <Container>
             <Logotipo src={logo}></Logotipo>
@@ -11,8 +16,8 @@ export default function Cadastro (){
             <Input></Input>
             <Input></Input>
 
-            <Button>Cadastrar</Button>
-            <p>Já tem uma conta? Entre agora!</p>
+            <Button onClick={() => navigate("/login")}>Cadastrar</Button>
+            <p onClick={() => navigate("/login")}>Já tem uma conta? Entre agora!</p>
 
         </Container>
     )

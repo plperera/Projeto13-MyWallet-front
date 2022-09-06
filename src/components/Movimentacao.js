@@ -1,20 +1,26 @@
 import styled from "styled-components"
 import { Input } from "./Login"
 
-export default function Entrada (){
+import { useNavigate } from 'react-router-dom'
+
+
+export default function Movimentacao ({tipo}){
+
+    const navigate = useNavigate()
+
     return(
         <Container>
 
             <ContainerTittle>
-                <p>Nova entrada</p>
+                <p>Nova {tipo ? ("entrada"):("saída")}</p>
                 {/* <img src={exitIcon}></img> */}
             </ContainerTittle>
 
             <Input></Input>
             <Input></Input>
 
-            <Button>
-                Salvar entrada
+            <Button onClick={() => navigate("/")}>
+                Salvar {tipo ? ("entrada"):("saída")}
             </Button>
         </Container>
     )
