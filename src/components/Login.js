@@ -12,7 +12,7 @@ export default function Login (){
         </Container>
     )
 }
-const Container = styled.div`
+export const Container = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
@@ -22,7 +22,7 @@ const Container = styled.div`
     height:100vh;
 
     p {
-        width: 191px;
+        width: 227px;
         height: 18px;
 
         font-weight: 700;
@@ -30,11 +30,11 @@ const Container = styled.div`
         color: #FFFFFF;
     }
 `
-const Logotipo = styled.img`
+export const Logotipo = styled.img`
     width:147px;
     margin-bottom: 24px;
 `
-const Input = styled.input`  
+export const Input = styled.input`  
     width: 326px;
     height: 58px;
     margin-bottom: 13px;
@@ -42,7 +42,7 @@ const Input = styled.input`
     background-color: #FFFFFF;
     border-radius: 5px;
 `
-const Button = styled.div`
+export const Button = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
