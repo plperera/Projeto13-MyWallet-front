@@ -14,6 +14,7 @@ export default function Home (){
 
             <ContainerRegistro>
                 Não há registros de entrada ou saída
+                {/*<Registro/>*/}
             </ContainerRegistro>
 
             <ContainerButton>
