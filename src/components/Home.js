@@ -2,12 +2,35 @@ import styled from "styled-components"
 import exitIcon from "../img/exit.svg"
 import menosIcon from "../img/menos.svg"
 import maisIcon from "../img/mais.svg"
+import LinhaHistorico from "./LinhaHistorico"
 
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from "react"
+import axios from 'axios';
 
 export default function Home (){
 
     const navigate = useNavigate()
+
+    const [historico, setHistorico] = useState([])
+
+    const headers = {
+        user: "Pedro 32"
+    }
+    const data = {
+        valor: 1,
+        descricao: "meu primeiro real"
+    }
+
+    useEffect (() => {
+
+        axios.get('http://localhost:5000/historico/'+headers.user).then((r) => setHistorico(r.data))
+
+    }, [])
+
+    axios.post('http://localhost:5000/historico', data, {
+    headers: headers
+    }).then ((r) => console.log(r))
 
     return(
         <Container>
@@ -18,8 +41,9 @@ export default function Home (){
             </ContainerTittle>
 
             <ContainerRegistro>
-                Não há registros de entrada ou saída
-                {/*<Registro/>*/}
+                
+                {(historico.length > 0) ? (<LinhaHistorico array={historico}/>):(<>Não há registros de entrada ou saída</>)}
+                
             </ContainerRegistro>
 
             <ContainerButton>
@@ -71,8 +95,8 @@ const ContainerTittle = styled.div`
 const ContainerRegistro = styled.div`
 
     display:flex;
-    flex-direction:row;
-    justify-content: center;
+    flex-direction:column;
+    //justify-content: center;
     align-items: center;
 
     height: 446px;
