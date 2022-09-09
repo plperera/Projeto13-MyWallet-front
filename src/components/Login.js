@@ -1,17 +1,44 @@
 import styled from "styled-components"
 import logo from "../img/logo.svg"
 import { useNavigate } from 'react-router-dom'
+import { useEffect , useState } from "react"
+import axios from "axios"
 
 export default function Login (){
 
     const navigate = useNavigate()
 
+    const [form, setForm] = useState({
+        email:"",
+        password:"",
+    })
+    function handleForm (e) {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
+    function sendForm () {
+        console.log(form)
+
+        const promisse = axios.post("http://localhost:5000/login", form)
+        .then( res => {navigate('/')})
+        .catch( res => {console.log(res.response.data)})
+    }
+
     return(
         <Container>
             <Logotipo src={logo}></Logotipo>
-            <Input></Input>
-            <Input></Input>
-            <Button onClick={() => navigate("/")}>Entrar</Button>
+
+            <Formulario>
+
+                <Input placeholder="E-mail" name="email" onChange={handleForm} value={form.email} required></Input>
+                <Input placeholder="Senha" name="password" onChange={handleForm} value={form.password} required></Input>
+
+                <Button onClick={() => sendForm()}>Entrar</Button>
+
+            </Formulario>
+            
             <p onClick={() => navigate("/cadastro")}>Primeira vez? Cadastre-se!</p>
 
         </Container>
@@ -63,4 +90,14 @@ export const Button = styled.div`
     color: #FFFFFF;
     font-weight: 700;
     font-size: 20px;
+`
+export const Formulario = styled.form`
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction: column;
+    
+    width:100%;
+
 `

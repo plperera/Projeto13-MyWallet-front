@@ -1,27 +1,55 @@
 import styled from "styled-components"
 import logo from "../img/logo.svg"
-import {Container, Input, Button, Logotipo} from "./Login"
-import { useNavigate } from 'react-router-dom'
+import {Container, Input, Button, Logotipo, Formulario} from "./Login"
+import { useNavigate} from 'react-router-dom'
+import { useState, useEffect } from "react"
+import axios from "axios" 
 
 export default function Cadastro (){
 
     const navigate = useNavigate()
 
+    const [form, setForm] = useState({
+        name:"",
+        email:"",
+        password:"",
+        passwordVerify:"",
+    })
+    function handleForm (e) {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
+    function sendForm () {
+        console.log(form)
+
+        const promisse = axios.post("http://localhost:5000/cadastro", form)
+        .then( res => {navigate('/login')})
+        .catch( res => {console.log(res.response.data)})
+    }
+
     return(
         <Container>
             <Logotipo src={logo}></Logotipo>
 
-            <Input></Input>
-            <Input></Input>
-            <Input></Input>
-            <Input></Input>
+            <Formulario>
 
-            <Button onClick={() => navigate("/login")}>Cadastrar</Button>
+                <Input placeholder="Nome" name="name" onChange={handleForm} value={form.name} required></Input>
+                <Input placeholder="E-mail" name="email" onChange={handleForm} value={form.email} required></Input>
+                <Input placeholder="Senha" name="password" onChange={handleForm} value={form.password} required></Input>
+                <Input placeholder="Confirme sua senha" name="passwordVerify" onChange={handleForm} value={form.passwordVerify} required></Input>
+
+                <Button onClick={() => sendForm()}>Cadastrar</Button>
+
+            </Formulario>
+                        
             <p onClick={() => navigate("/login")}>Já tem uma conta? Entre agora!</p>
 
         </Container>
     )
 }
+
 /*
 const Container = styled.div`
     display:flex;

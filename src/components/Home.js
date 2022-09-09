@@ -15,11 +15,11 @@ export default function Home (){
     const [historico, setHistorico] = useState([])
 
     const headers = {
-        user: "Pedro 32"
+        user: "Pedro Pereira"
     }
     const data = {
-        valor: 1,
-        descricao: "meu primeiro real"
+        valor: 36.90,
+        descricao: "pinga"
     }
 
     useEffect (() => {
@@ -28,15 +28,11 @@ export default function Home (){
 
     }, [])
 
-    axios.post('http://localhost:5000/historico', data, {
-    headers: headers
-    }).then ((r) => console.log(r))
-
     return(
         <Container>
 
             <ContainerTittle>
-                <p>Olá, Fulano</p>
+                <p>Olá, {headers.user}</p>
                 <img src={exitIcon} onClick={() => navigate("/login")}></img>
             </ContainerTittle>
 
@@ -82,7 +78,7 @@ const ContainerTittle = styled.div`
     margin: 25px 0;
 
     p{
-        width: 141px;
+        width: 80%;
 
         color: #FFFFFF;
         font-size: 26px;

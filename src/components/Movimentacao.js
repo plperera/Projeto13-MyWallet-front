@@ -1,12 +1,60 @@
 import styled from "styled-components"
 import { Input } from "./Login"
 
+import { useState } from "react"
+import axios from "axios"
 import { useNavigate } from 'react-router-dom'
 
 
 export default function Movimentacao ({tipo}){
 
     const navigate = useNavigate()
+
+    const headers = {
+        user: "Pedro Pereira"
+    }
+    const [form, setForm] = useState({
+        valor:"",
+        descricao:""
+    })
+
+    function handleForm(e){
+        if (e.target.value < 0 && !tipo){
+
+            setForm({
+                ...form,
+                [e.target.name]: e.target.value
+            })
+        } else {
+
+            setForm({
+                ...form,
+                [e.target.name]: e.target.value
+            })
+        }
+        
+    }
+    function sendForm() {
+        let body
+        if (!tipo){
+
+            body = {
+                ...form,
+                valor: Math.abs(form.valor) * -1
+            }
+
+        } else {
+            body = { ...form }
+        }
+        console.log(body)
+
+        const promisse = axios.post('http://localhost:5000/historico', body, {
+            headers: headers
+        })
+        .then ((r) => navigate('/'))
+        .catch ((r) => console.log(r))
+    }
+
 
     return(
         <Container>
@@ -16,15 +64,31 @@ export default function Movimentacao ({tipo}){
                 {/* <img src={exitIcon}></img> */}
             </ContainerTittle>
 
-            <Input></Input>
-            <Input></Input>
+            <Formulario>
 
-            <Button onClick={() => navigate("/")}>
-                Salvar {tipo ? ("entrada"):("saída")}
-            </Button>
+                <Input placeholder="Valor" name="valor" onChange={handleForm} value={form.valor} required></Input>
+                <Input placeholder="Descrição" name="descricao" onChange={handleForm} value={form.descricao} required></Input>
+
+                <Button onClick={() => sendForm()}>
+                    Salvar {tipo ? ("entrada"):("saída")}
+                </Button>
+
+            </Formulario>
+            
+
+            
         </Container>
     )
 }
+
+const Formulario = styled.form`
+    display:flex;
+    //justify-content:center;
+    align-items:center;
+    flex-direction: column;
+    
+    width: 100%;
+`
 const Container = styled.div`
     display:flex;
     //justify-content:center;

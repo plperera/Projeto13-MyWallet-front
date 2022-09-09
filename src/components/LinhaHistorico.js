@@ -6,10 +6,10 @@ export default function LinhaHistorico ({array}){
 
         array.map ((e, i) => 
 
-            <Container>
+            <Container key={i}>
                 <ContainerData>09/09/2022</ContainerData>
                 <ContainerDescricao>{e.descricao}</ContainerDescricao>
-                <ContainerValor>{e.valor}</ContainerValor>
+                <ContainerValor movimentacao= { (e.valor > 0) ? ("#03AC00"):("#C70000")}>{e.valor}</ContainerValor>
             </Container>
 
         )
@@ -41,6 +41,10 @@ const ContainerValor = styled.div`
     display:flex;
     align-items:center;
     justify-content:center;
+
+    color: ${props => props.movimentacao};
+    font-size: 17px;
+    font-weight: 500;
 
 `
 
