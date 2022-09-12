@@ -21,12 +21,16 @@ export default function Cadastro (){
             [e.target.name]: e.target.value
         })
     }
-    function sendForm () {
-        console.log(form)
+    async function sendForm () {
+                
+        try {
+            const res = await axios.post("http://localhost:5000/cadastro", form)
+            console.log(form)
+            navigate('/login')
+        } catch (error) {
+            console.log(error)
+        }
 
-        const promisse = axios.post("http://localhost:5000/cadastro", form)
-        .then( res => {navigate('/login')})
-        .catch( res => {console.log(res.response.data)})
     }
 
     return(
