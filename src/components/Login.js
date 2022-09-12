@@ -29,7 +29,7 @@ export default function Login (){
             console.log(form)
             navigate('/')
         } catch (error) {
-            console.log(error)
+            console.log({message:"senha e/ou email invalido(s)", erro: error})
         } 
  
     }
