@@ -56,8 +56,7 @@ export default function Movimentacao ({tipo}){
             console.log(body)
             navigate('/')
         } catch (error) {
-            console.log(error)
-            navigate('/login')
+            console.log({erro: error})
         }
         
     }

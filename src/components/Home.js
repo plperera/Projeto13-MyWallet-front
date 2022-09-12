@@ -11,13 +11,16 @@ import userContext from "../contexts/userContext"
 
 
 export default function Home (){
+    
     const {user} = useContext(userContext)
     console.log(user.token)
     const navigate = useNavigate()
+    let subtotal = 0
 
     if (user.token === undefined) navigate('/login')
 
     const [historico, setHistorico] = useState([])
+    const [total, setTotal] = useState(0)
 
     async function buscarHistorico (){
 
@@ -29,7 +32,9 @@ export default function Home (){
             })
             console.log(res.data)
             setHistorico(res.data)
-
+            
+            
+            
         } catch (error) {
             console.log(error)
             navigate('/login')
@@ -41,6 +46,14 @@ export default function Home (){
         buscarHistorico()    
            
     }, [])
+    useEffect (() => {
+
+        historico.map((e) => {
+            subtotal += Number(e.valor)
+        })
+        setTotal(subtotal)    
+           
+    }, [historico])
 
     return(
         <Container>
@@ -53,6 +66,11 @@ export default function Home (){
             <ContainerRegistro>
                 
                 {(historico.length > 0) ? (<LinhaHistorico array={historico}/>):(<>Não há registros de entrada ou saída</>)}
+
+                <ContainerSaldo> 
+                    <TittleSaldo>SALDO</TittleSaldo>
+                    <TittleNumber movimentacao= { (total > 0) ? ("#03AC00"):("#C70000")}>{total}</TittleNumber>
+                </ContainerSaldo>
                 
             </ContainerRegistro>
 
@@ -80,8 +98,38 @@ const Container = styled.div`
     flex-direction: column;
     
     width: 100%;
-    height: 100vh;
+    height: 100vh;    
 `
+const ContainerSaldo = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:space-between !important;
+
+    width:95%;
+    bottom:7px;
+
+    position:absolute;
+
+`
+const TittleSaldo = styled.div`
+    font-size: 17px;
+    color: #000000;
+    font-weight: 700;
+    text-align:center;
+
+    width: 63px;
+    height: 20px;       
+`
+const TittleNumber = styled.div`
+    font-size: 17px;
+    color: ${props => props.movimentacao};
+    font-weight: 700;
+    text-align:center;
+
+    width: 63px;
+    height: 20px;       
+`
+
 const ContainerTittle = styled.div`
     display:flex;
     flex-direction:row;
@@ -113,6 +161,8 @@ const ContainerRegistro = styled.div`
     width:87%;
     background-color: #FFFFFF;
     border-radius: 5px;
+    position:relative;
+
 
     p {
         width: 180px;

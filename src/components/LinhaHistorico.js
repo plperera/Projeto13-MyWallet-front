@@ -7,9 +7,9 @@ export default function LinhaHistorico ({array}){
         array.map ((e, i) => 
 
             <Container key={i}>
-                <ContainerData>09/09/2022</ContainerData>
+                <ContainerData>{e.data.replace(":","/")}</ContainerData>
                 <ContainerDescricao>{e.descricao}</ContainerDescricao>
-                <ContainerValor movimentacao= { (e.valor > 0) ? ("#03AC00"):("#C70000")}>{e.valor}</ContainerValor>
+                <ContainerValor movimentacao= { (e.valor > 0) ? ("#03AC00"):("#C70000")}>{Number(e.valor).toFixed(2).replace(".",",")}</ContainerValor>
             </Container>
 
         )
@@ -30,13 +30,13 @@ const Container = styled.div`
 `
 const ContainerDescricao = styled.div`
 
-    width: 65%;
+    width: 55%;
 
 
 `
 const ContainerValor = styled.div`
 
-    width: 15%;
+    width: 25%;
 
     display:flex;
     align-items:center;
