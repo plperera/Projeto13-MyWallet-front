@@ -65,7 +65,7 @@ export default function Home (){
 
             <ContainerRegistro>
                 
-                {(historico.length > 0) ? (<LinhaHistorico array={historico}/>):(<>Não há registros de entrada ou saída</>)}
+                {(historico.length > 0) ? (<LinhaHistorico array={historico}/>):(<ContainerVazio>Não há registros de entrada ou saída</ContainerVazio>)}
 
                 <ContainerSaldo> 
                     <TittleSaldo>SALDO</TittleSaldo>
@@ -204,4 +204,15 @@ const Button = styled.div`
 
     background: #A328D6;
     border-radius: 5px;
+`
+const ContainerVazio = styled.div`
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    height:100%;
+
+    font-size: 20px;
+    color: #868686;
+
 `

@@ -29,6 +29,7 @@ export default function Cadastro (){
             navigate('/login')
         } catch (error) {
             console.log(error)
+
         }
 
     }
