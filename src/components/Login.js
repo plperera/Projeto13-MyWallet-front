@@ -9,7 +9,7 @@ export default function Login (){
 
     const navigate = useNavigate()
 
-    const {setToken} = useContext(userContext)
+    const {setUser} = useContext(userContext)
 
     const [form, setForm] = useState({
         email:"",
@@ -25,7 +25,7 @@ export default function Login (){
         
         try {
             const res = await axios.post("http://localhost:5000/login", form)
-            setToken(res.data)
+            setUser({token: res.data.token, name: res.data.name})
             console.log(form)
             navigate('/')
         } catch (error) {

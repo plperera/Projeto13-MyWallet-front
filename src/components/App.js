@@ -7,10 +7,10 @@ import Movimentacao from "./Movimentacao"
 import userContext from "../contexts/userContext"
 
 export default function App (){
-    const [token, setToken] = useState("")
+    const [user, setUser] = useState({})
     return(
         
-        <userContext.Provider value={{token, setToken}}>
+        <userContext.Provider value={{user, setUser}}>
             <BrowserRouter>
                 <Routes>
 

@@ -11,9 +11,11 @@ import userContext from "../contexts/userContext"
 
 
 export default function Home (){
-    const {token} = useContext(userContext)
-    console.log(token)
+    const {user} = useContext(userContext)
+    console.log(user.token)
     const navigate = useNavigate()
+
+    if (user.token === undefined) navigate('/login')
 
     const [historico, setHistorico] = useState([])
 
@@ -22,13 +24,15 @@ export default function Home (){
         try {
             const res = await axios.get('http://localhost:5000/historico',{
                 headers: {
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + user.token
                 }
             })
+            console.log(res.data)
             setHistorico(res.data)
 
         } catch (error) {
             console.log(error)
+            navigate('/login')
         }  
     }
 
@@ -42,7 +46,7 @@ export default function Home (){
         <Container>
 
             <ContainerTittle>
-                <p>Olá, ...</p>
+                <p>Olá, {user.name}</p>
                 <img src={exitIcon} onClick={() => navigate("/login")}></img>
             </ContainerTittle>
 

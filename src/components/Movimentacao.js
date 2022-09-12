@@ -9,7 +9,7 @@ import userContext from "../contexts/userContext"
 export default function Movimentacao ({tipo}){
 
     const navigate = useNavigate()
-    const {token} = useContext(userContext)
+    const {user} = useContext(userContext)
 
     const [form, setForm] = useState({
         valor:"",
@@ -42,18 +42,22 @@ export default function Movimentacao ({tipo}){
             }
 
         } else {
-            body = { ...form }
+            body = {
+                ...form,
+                valor: Math.abs(form.valor)
+            }
         }
         try {
             const res = await axios.post('http://localhost:5000/historico', body, {
                 headers: {
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + user.token
                 }
             })
             console.log(body)
             navigate('/')
         } catch (error) {
             console.log(error)
+            navigate('/login')
         }
         
     }
