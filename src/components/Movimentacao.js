@@ -1,18 +1,16 @@
 import styled from "styled-components"
 import { Input } from "./Login"
 
-import { useState } from "react"
+import { useState, useContext } from "react"
 import axios from "axios"
 import { useNavigate } from 'react-router-dom'
-
+import userContext from "../contexts/userContext"
 
 export default function Movimentacao ({tipo}){
 
     const navigate = useNavigate()
+    const {token} = useContext(userContext)
 
-    const headers = {
-        user: "Pedro Pereira"
-    }
     const [form, setForm] = useState({
         valor:"",
         descricao:""
@@ -34,7 +32,7 @@ export default function Movimentacao ({tipo}){
         }
         
     }
-    function sendForm() {
+    async function sendForm() {
         let body
         if (!tipo){
 
@@ -46,13 +44,18 @@ export default function Movimentacao ({tipo}){
         } else {
             body = { ...form }
         }
-        console.log(body)
-
-        const promisse = axios.post('http://localhost:5000/historico', body, {
-            headers: headers
-        })
-        .then ((r) => navigate('/'))
-        .catch ((r) => console.log(r))
+        try {
+            const res = await axios.post('http://localhost:5000/historico', body, {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+            console.log(body)
+            navigate('/')
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
 
 

@@ -17,37 +17,32 @@ export default function Home (){
 
     const [historico, setHistorico] = useState([])
 
-    const headers = {
-        user: "Pedro Pereira"
-    }
-    const data = {
-        valor: 36.90,
-        descricao: "pinga"
+    async function buscarHistorico (){
+
+        try {
+            const res = await axios.get('http://localhost:5000/historico',{
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+            setHistorico(res.data)
+
+        } catch (error) {
+            console.log(error)
+        }  
     }
 
     useEffect (() => {
-        async function historico(){
-            try {
 
-                const res = await axios.get('http://localhost:5000/historico',{
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    }
-                })
-                setHistorico(res.data)
-
-            } catch (error) {
-                console.log(error)
-            }
-        }
-
+        buscarHistorico()    
+           
     }, [])
 
     return(
         <Container>
 
             <ContainerTittle>
-                <p>Olá, {headers.user}</p>
+                <p>Olá, ...</p>
                 <img src={exitIcon} onClick={() => navigate("/login")}></img>
             </ContainerTittle>
 
