@@ -5,11 +5,14 @@ import maisIcon from "../img/mais.svg"
 import LinhaHistorico from "./LinhaHistorico"
 
 import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import axios from 'axios';
+import userContext from "../contexts/userContext"
+
 
 export default function Home (){
-
+    const {token} = useContext(userContext)
+    console.log(token)
     const navigate = useNavigate()
 
     const [historico, setHistorico] = useState([])
@@ -23,8 +26,20 @@ export default function Home (){
     }
 
     useEffect (() => {
+        async function historico(){
+            try {
 
-        axios.get('http://localhost:5000/historico/'+headers.user).then((r) => setHistorico(r.data))
+                const res = await axios.get('http://localhost:5000/historico',{
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                })
+                setHistorico(res.data)
+
+            } catch (error) {
+                console.log(error)
+            }
+        }
 
     }, [])
 

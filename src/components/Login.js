@@ -1,12 +1,15 @@
 import styled from "styled-components"
 import logo from "../img/logo.svg"
 import { useNavigate } from 'react-router-dom'
-import { useEffect , useState } from "react"
+import { useEffect , useState, useContext } from "react"
 import axios from "axios"
+import userContext from "../contexts/userContext"
 
 export default function Login (){
 
     const navigate = useNavigate()
+
+    const {setToken} = useContext(userContext)
 
     const [form, setForm] = useState({
         email:"",
@@ -18,12 +21,17 @@ export default function Login (){
             [e.target.name]: e.target.value
         })
     }
-    function sendForm () {
-        console.log(form)
-
-        const promisse = axios.post("http://localhost:5000/login", form)
-        .then( res => {navigate('/')})
-        .catch( res => {console.log(res.response.data)})
+    async function sendForm () {
+        
+        try {
+            const res = await axios.post("http://localhost:5000/login", form)
+            setToken(res.data)
+            console.log(form)
+            navigate('/')
+        } catch (error) {
+            console.log(error)
+        } 
+ 
     }
 
     return(

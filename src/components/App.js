@@ -4,12 +4,13 @@ import Login from "./Login"
 import Cadastro from "./Cadastro"
 import Home from "./Home"
 import Movimentacao from "./Movimentacao"
+import userContext from "../contexts/userContext"
 
 export default function App (){
-    
+    const [token, setToken] = useState("")
     return(
-
-        <>
+        
+        <userContext.Provider value={{token, setToken}}>
             <BrowserRouter>
                 <Routes>
 
@@ -21,7 +22,7 @@ export default function App (){
 
                 </Routes>
             </BrowserRouter>
-        </>
+        </userContext.Provider>
         
         
     )
